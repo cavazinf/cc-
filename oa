@@ -1,0 +1,59 @@
+Desenvolver um projeto com o paradigma de programação Orientado a Aspectos (AOP) envolve a separação de interesses transversais, como logging, segurança, tratamento de exceções, entre outros, do código principal do programa.
+
+Um dos frameworks mais conhecidos para AOP é o AspectJ, que estende a linguagem Java para permitir a programação com aspectos. Aqui está um exemplo básico de como criar um aspecto usando AspectJ:
+
+Configuração do Ambiente
+Para usar o AspectJ, você precisa de:
+
+AspectJ Compiler: Baixe o AspectJ JAR e configure o ambiente de desenvolvimento.
+IDE: Configure seu IDE para reconhecer os aspecto do AspectJ.
+Projeto: Crie um projeto Java para escrever seu código.
+Exemplo de Aspecto (Logging)
+Considere um cenário onde você quer adicionar logs a cada método da classe Service, que representa o serviço principal do seu aplicativo.
+
+Criação do Aspecto:
+java
+Copy code
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class LoggingAspect {
+
+    @Before("execution(* com.example.Service.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        System.out.println("Log before " + joinPoint.getSignature().getName() + " method");
+    }
+}
+Neste exemplo, @Aspect define que esta classe é um aspecto. O método logBefore será executado antes de cada método público na classe Service devido à expressão @Before.
+
+Classe de Serviço:
+java
+Copy code
+package com.example;
+
+public class Service {
+
+    public void doSomething() {
+        System.out.println("Doing something...");
+    }
+
+    public void doAnotherThing() {
+        System.out.println("Doing another thing...");
+    }
+}
+Main Class:
+java
+Copy code
+package com.example;
+
+public class Main {
+    public static void main(String[] args) {
+        Service service = new Service();
+        service.doSomething();
+        service.doAnotherThing();
+    }
+}
+Compilação e Execução:
+Compile o código com o AspectJ Compiler e execute a classe Main. Você verá logs antes da execução de cada método em Service.
